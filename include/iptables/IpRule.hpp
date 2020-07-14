@@ -19,9 +19,6 @@ class IpRule {
    */
   IpRule() {}
 
-  IpRule(unsigned int num, Target& target, Protocol& protocol, std::string& opt, std::string& in, std::string& out,
-         std::string);
-
   /**
    * @brief Destroy the Ip Rule object
    *
