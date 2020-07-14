@@ -1,0 +1,5 @@
+{
+  "clang-format.fallbackStyle": "none",
+  "clang-format.executable": "/usr/bin/clang-format",
+  "editor.formatOnSave": true
+}
