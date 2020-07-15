@@ -6,8 +6,12 @@ set(CMAKE_CXX_STANDARD 11)
 # Executable
 ###########################################
 add_library(${PROJECT_NAME}_obj OBJECT
-    src/IpRule.cpp
-    src/IpTablesMap.cpp
+    src/Chain.cpp
+    src/ChainMap.cpp
+    src/IpAddress.cpp
+    stc/IpTablesWrapper.cpp
+    src/Rule.cpp
+    src/RuleMap.cpp
 )
 
 add_executable(${PROJECT_NAME}
@@ -26,8 +30,12 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 ###########################################
 add_executable(run-tests
     $<TARGET_OBJECTS:${PROJECT_NAME}_obj>
-    tests/IpRuleTest.cpp
-    tests/IpTablesMapTest.cpp
+    tests/ChainMapTest.cpp
+    tests/ChainTest.cpp
+    tests/IpAddressTest.cpp
+    tests/IpTablesWrapper.cpp
+    tests/RuleMapTest.cpp
+    tests/RuleTest.cpp
 )
 
 target_link_libraries(run-tests

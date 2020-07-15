@@ -1,58 +1,53 @@
-#ifndef IP_TABLE_MAP_HPP
-#define IP_TABLE_MAP_HPP
-
-#include <map>
+#ifndef IP_TABLES_WRAPPER_HPP
+#define IP_TABLES_WRAPPER_HPP
 
 #include "iptables/IpRule.hpp"
+#include "iptables/IpTablesMap.hpp"
 
 namespace iptables {
-/**
- * @brief Class to represent iptables as a map
- *
- */
-class IpTablesMap {
+class IpTablesWrapper {
  public:
   /**
-   * @brief Construct a new Ip Tables object
+   * @brief Construct a new Ip Tables Wrapper object
    *
    */
-  IpTablesMap() {}
+  IpTablesWrapper();
 
   /**
-   * @brief Destroy the Ip Tables object
+   * @brief Destroy the Ip Tables Wrapper object
    *
    */
-  ~IpTablesMap() {}
+  ~IpTablesWrapper();
 
   /**
    * @brief List all ip rules in the ip tables map
    *
    */
-  void listIpTablesRulesFromMap();
+  void listRulesFromIpTable();
 
   /**
    * @brief Add an IpRule to the ip tables map
    *
    * @param ipRule    IpRule object
    */
-  void addRuleToIpTablesMap(IpRule& ipRule);
+  void addRuleToIpTable(IpRule& ipRule);
 
   /**
    * @brief Delete an IpRule from the ip tables map
    *
    * @param ipRule    IpRule object
    */
-  void deleteRuleFromIpTablesMap(IpRule& ipRule);
+  void deleteRuleFromIpTable(IpRule& ipRule);
 
   /**
    * @brief Modify an existing IpRule from the ip tables map
    *
    * @param ipRule    IpRule object
    */
-  void modifyRuleFromIpTables(IpRule& ipRule);
+  void modifyRuleFromIpTable(IpRule& ipRule);
 
  private:
-  std::map<unsigned int, IpRule> ipTablesMap;
+  IpTablesMap ipTablesMap;
 };
 }  // namespace iptables
-#endif  // !IP_TABLES_MAP_HPP
+#endif  // !IP_TABLES_WRAPPER_HPP
