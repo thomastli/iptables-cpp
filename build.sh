@@ -1,6 +1,5 @@
 #!/bin/sh
 
-install build/
-cd build
-cmake ..
+install -d build
+cmake ../..
 make
