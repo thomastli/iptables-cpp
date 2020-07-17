@@ -14,3 +14,14 @@ Chain ChainMap::retrieveChainFromMap(std::string& chainName) {
 void ChainMap::deleteChainFromMap(std::string& chainName) {
   chainMap.erase(chainName);
 }
+
+bool ChainMap::hasChainInMap(std::string& chainName) {
+  bool result = false;
+
+  std::map<std::string, Chain>::iterator itr = chainMap.find(chainName);
+  if (itr != chainMap.end()) {
+    result = true;
+  }
+
+  return result;
+}

@@ -25,26 +25,35 @@ class RuleMap {
   ~RuleMap() {}
 
   /**
-   * @brief Add an rule to the rule map
+   * @brief Add a rule to the rule map
    *
    * @param rule  The rule object
    */
-  void addRuleToRuleMap(unsigned int numId, Rule& rule);
+  void addRuleToRuleMap(unsigned int ruleNum, Rule& rule);
 
   /**
-   * @brief Retrieve ip rule from rule map
+   * @brief Retrieve a rule from rule map
    *
-   * @param numId   The number id
+   * @param ruleNum   The rule number
    * @return Rule   The rule object
    */
-  Rule retrieveRuleFromRuleMap(unsigned int numId);
+  Rule retrieveRuleFromRuleMap(unsigned int ruleNum);
 
   /**
-   * @brief Delete anrule from rule map
+   * @brief Delete a rule from rule map
    *
-   * @param numId   The number id
+   * @param ruleNum   The rule number
    */
-  void deleteRuleFromRuleMap(unsigned int numId);
+  void deleteRuleFromRuleMap(unsigned int ruleNum);
+
+  /**
+   * @brief Has a rule in the rule map
+   *
+   * @param int     The rule number
+   * @return true   If present in the map
+   * @return false  Otherwise
+   */
+  bool hasRuleInMap(unsigned int);
 
  private:
   std::map<unsigned int, Rule> ruleMap;

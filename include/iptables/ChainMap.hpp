@@ -40,6 +40,15 @@ class ChainMap {
    */
   void deleteChainFromMap(std::string& chainName);
 
+  /**
+   * @brief Verify if chain is present in the map
+   *
+   * @param chainName   The chain name
+   * @return true       If present in the map
+   * @return false      Otherwise
+   */
+  bool hasChainInMap(std::string& chainName);
+
  private:
   std::map<std::string, Chain> chainMap;
 };

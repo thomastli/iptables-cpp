@@ -10,7 +10,7 @@ SCENARIO("ChainMapTest -  add chain to the map") {
   Chain chain = Chain();
   chainMap.addChainToMap(chainName, chain);
 
-  Chain retrievedChain = chainMap.retrieveChainFromMap(chainName);
+  REQUIRE(chainMap.hasChainInMap(chainName));
 }
 
 SCENARIO("ChainMapTest - delete chain to the map") {
@@ -21,6 +21,8 @@ SCENARIO("ChainMapTest - delete chain to the map") {
   chainMap.addChainToMap(chainName, chain);
 
   chainMap.deleteChainFromMap(chainName);
+
+  REQUIRE(!chainMap.hasChainInMap(chainName));
 }
 
 SCENARIO("ChainMapTest - retrieve chain from the map") {
@@ -31,4 +33,4 @@ SCENARIO("ChainMapTest - retrieve chain from the map") {
   chainMap.addChainToMap(chainName, chain);
 
   Chain retrievedChain = chainMap.retrieveChainFromMap(chainName);
-})
+}

@@ -9,7 +9,7 @@ add_library(${PROJECT_NAME}_obj OBJECT
     src/Chain.cpp
     src/ChainMap.cpp
     src/IpAddress.cpp
-    stc/IpTablesWrapper.cpp
+    src/IpTablesWrapper.cpp
     src/Rule.cpp
     src/RuleMap.cpp
 )
@@ -33,7 +33,7 @@ add_executable(run-tests
     tests/ChainMapTest.cpp
     tests/ChainTest.cpp
     tests/IpAddressTest.cpp
-    tests/IpTablesWrapper.cpp
+    tests/IpTablesWrapperTest.cpp
     tests/RuleMapTest.cpp
     tests/RuleTest.cpp
 )
