@@ -22,11 +22,11 @@ std::string Rule::getOutValue() {
   return this->out;
 }
 
-IpAddress Rule::getSourceAddress() {
+Address Rule::getSourceAddress() {
   return this->source;
 }
 
-IpAddress Rule::getDestinationAddress() {
+Address Rule::getDestinationAddress() {
   return this->destination;
 }
 
@@ -50,10 +50,10 @@ void Rule::setOutValue(std::string& out) {
   this->out = out;
 }
 
-void Rule::setSourceAddress(IpAddress& source) {
+void Rule::setSourceAddress(Address& source) {
   this->source = source;
 }
 
-void Rule::setDestinationAddress(IpAddress& destination) {
+void Rule::setDestinationAddress(Address& destination) {
   this->destination = destination;
 }

@@ -1,11 +1,11 @@
+#include "iptables/Address.hpp"
+
 #include <iostream>
 #include <regex>
 #include <sstream>
 
-#include "iptables/Address.hpp"
-
 static const char IP_ADDRESS_DELIMITER = '.';
-static constexpr char* IP_REGEX_PATTERN = "localhost|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+[/0-9]*";
+static const std::string IP_REGEX_PATTERN = "localhost|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+";
 
 using namespace iptables;
 
@@ -59,11 +59,10 @@ void Address::setSubnetMask(int subnetMask) {
 
 void Address::parseIpAddressFromString(std::string& address) {
   std::stringstream sstream(address);
-  std::string substr;
 
-  while (std::getline(sstream, substr, IP_ADDRESS_DELIMITER)) {
-    int value;
-    sstream >> value;
+  std::string substr;
+  while (std::getline(sstream, substr, '.')) {
+    unsigned int value = stoi(substr);
     this->ipAddress.push_back(value);
   }
 }
@@ -71,13 +70,10 @@ void Address::parseIpAddressFromString(std::string& address) {
 std::string Address::formatIpAddressToString() {
   std::string ipAddressAsString = "";
 
-  std::stringstream sstream;
-  sstream << ipAddress[0];
-  ipAddressAsString += sstream.str();
+  ipAddressAsString += std::to_string(ipAddress[0]);
 
   for (int i = 1; i < ipAddress.size(); i++) {
-    sstream << ipAddress[i];
-    ipAddressAsString += "." + sstream.str();
+    ipAddressAsString += "." + std::to_string(ipAddress[i]);
   }
 
   return ipAddressAsString;

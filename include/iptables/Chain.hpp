@@ -5,6 +5,7 @@
 #include <string>
 
 #include "iptables/Rule.hpp"
+#include "iptables/RuleMap.hpp"
 
 namespace iptables {
 class Chain {
@@ -30,12 +31,11 @@ class Chain {
   void addRuleToChain(unsigned int ruleNum, Rule& rule);
 
   /**
-   * @brief Modify rule in the chain
+   * @brief Delete rule from the chain
    *
    * @param ruleNum The rule number
-   * @param rule    The rule object
    */
-  void modifyRuleInChain(unsigned int ruleNum, Rule& rule);
+  void deleteRuleFromChain(unsigned int ruleNum);
 
   /**
    * @brief Retrieve rule from the chain
@@ -46,14 +46,16 @@ class Chain {
   Rule retrieveRuleFromChain(unsigned int ruleNum);
 
   /**
-   * @brief Delete rule from the chain
+   * @brief Checks whether rule is in chain
    *
    * @param ruleNum The rule number
+   * @return true   If the rule is in the cahin
+   * @return false  Otherwise
    */
-  void deleteRuleFromChain(unsigned int ruleNum);
+  bool hasRuleInChain(unsigned int ruleNum);
 
  private:
-  std::map<unsigned int, Rule> ruleMap;
+  RuleMap ruleMap;
 };
 }  // namespace iptables
 #endif  // !CHAIN_HPP

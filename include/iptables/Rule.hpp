@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "iptables/IpAddress.hpp"
+#include "iptables/Address.hpp"
 
 enum class Target { ACCEPT, DECLINE };
 enum class Protocol { TCP, UDP, ALL };
@@ -65,16 +65,16 @@ class Rule {
   /**
    * @brief Get the source address from the Rule obejct
    *
-   * @return IpAddress  The source address
+   * @return Address  The source address
    */
-  IpAddress getSourceAddress();
+  Address getSourceAddress();
 
   /**
    * @brief Get the destination address from the Rule object
    *
-   * @return IpAddress  The destination address
+   * @return Address  The destination address
    */
-  IpAddress getDestinationAddress();
+  Address getDestinationAddress();
 
   /**
    * @brief Set the target for the Rule object
@@ -116,14 +116,14 @@ class Rule {
    *
    * @param source
    */
-  void setSourceAddress(IpAddress& source);
+  void setSourceAddress(Address& source);
 
   /**
    * @brief Set the destination address for the Rule object
    *
    * @param destination
    */
-  void setDestinationAddress(IpAddress& destination);
+  void setDestinationAddress(Address& destination);
 
  private:
   Target target;
@@ -131,8 +131,8 @@ class Rule {
   std::string opt;
   std::string in;
   std::string out;
-  IpAddress source;
-  IpAddress destination;
+  Address source;
+  Address destination;
 };
 }  // namespace iptables
 #endif  // !RULE_HPP

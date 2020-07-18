@@ -6,7 +6,7 @@ using namespace iptables;
 SCENARIO("AddressTest - get/set hostname") {
   Address address = Address();
 
-  std::string hostName = "localHost";
+  std::string hostName = "localhost";
   address.setHostName(hostName);
 
   REQUIRE(address.getHostName() == "localhost");

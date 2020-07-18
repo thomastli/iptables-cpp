@@ -4,8 +4,8 @@ using namespace iptables;
 
 void IpTablesWrapper::listRulesFromIpTable() {}
 
-void IpTablesWrapper::addRuleToIpTable() {}
+void IpTablesWrapper::addRuleToIpTable(Rule& rule) {}
 
-void IpTablesWrapper::deleteRuleFromIpTable() {}
+void IpTablesWrapper::deleteRuleFromIpTable(Rule& rule) {}
 
-void IpTablesWrapper::modifyRuleFromIpTable() {}
+void IpTablesWrapper::modifyRuleFromIpTable(Rule& rule) {}

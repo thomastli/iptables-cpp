@@ -9,6 +9,8 @@ SCENARIO("ChainTest -  add rule to chain") {
   unsigned int ruleNum = 0;
   Rule rule = Rule();
   chain.addRuleToChain(ruleNum, rule);
+
+  REQUIRE(chain.hasRuleInChain(ruleNum));
 }
 
 SCENARIO("ChainTest - retrieve rule from chain") {
@@ -18,7 +20,7 @@ SCENARIO("ChainTest - retrieve rule from chain") {
   Rule rule = Rule();
   chain.addRuleToChain(ruleNum, rule);
 
-  Rule retrievedRule = chain.retrieveRuleFromChain(ruleNum);
+  REQUIRE_NOTHROW(chain.retrieveRuleFromChain(ruleNum));
 }
 
 SCENARIO("ChainTest - delete rule from chain") {
@@ -29,4 +31,5 @@ SCENARIO("ChainTest - delete rule from chain") {
   chain.addRuleToChain(ruleNum, rule);
 
   chain.deleteRuleFromChain(ruleNum);
+  REQUIRE(!chain.hasRuleInChain(ruleNum));
 }

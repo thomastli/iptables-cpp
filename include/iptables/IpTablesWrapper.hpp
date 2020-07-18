@@ -1,8 +1,8 @@
 #ifndef IP_TABLES_WRAPPER_HPP
 #define IP_TABLES_WRAPPER_HPP
 
-#include "iptables/IpRule.hpp"
-#include "iptables/IpTablesMap.hpp"
+#include "iptables/Rule.hpp"
+#include "iptables/RuleMap.hpp"
 
 namespace iptables {
 class IpTablesWrapper {
@@ -26,28 +26,28 @@ class IpTablesWrapper {
   void listRulesFromIpTable();
 
   /**
-   * @brief Add an IpRule to the ip tables map
+   * @brief Add an Rule to the ip tables map
    *
-   * @param ipRule    IpRule object
+   * @param rule    Rule object
    */
-  void addRuleToIpTable(IpRule& ipRule);
+  void addRuleToIpTable(Rule& rule);
 
   /**
-   * @brief Delete an IpRule from the ip tables map
+   * @brief Delete an Rule from the ip tables map
    *
-   * @param ipRule    IpRule object
+   * @param rule    Rule object
    */
-  void deleteRuleFromIpTable(IpRule& ipRule);
+  void deleteRuleFromIpTable(Rule& rule);
 
   /**
-   * @brief Modify an existing IpRule from the ip tables map
+   * @brief Modify an existing Rule from the ip tables map
    *
-   * @param ipRule    IpRule object
+   * @param rule    Rule object
    */
-  void modifyRuleFromIpTable(IpRule& ipRule);
+  void modifyRuleFromIpTable(Rule& rule);
 
  private:
-  IpTablesMap ipTablesMap;
+  RuleMap ruleMap;
 };
 }  // namespace iptables
 #endif  // !IP_TABLES_WRAPPER_HPP
