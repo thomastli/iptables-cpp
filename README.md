@@ -4,9 +4,9 @@ C++ library for listing, adding, modifying, and deleting iptable rules
 
 ## Build instructions
 
-git clone https://github.com/thomastli/iptables-cpp.git
-cd iptables-cpp
-docker build -t iptables-ubuntu .
+git clone https://github.com/thomastli/iptables-cpp.git \
+cd iptables-cpp \
+docker build -t iptables-ubuntu . \
 docker run -it iptables-ubuntu /bin/bash
 
 ## Development Notes
