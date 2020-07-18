@@ -11,7 +11,7 @@ docker run -it iptables-ubuntu /bin/bash
 
 ## Development Notes
 
-### IDE
+### Preferred IDE
 
 Visual Studio Code
 
