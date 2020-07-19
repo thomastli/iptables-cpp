@@ -32,6 +32,14 @@ class RuleMap {
   void addRuleToRuleMap(Rule& rule);
 
   /**
+   * @brief Insert rule into rule map
+   *
+   * @param ruleNum The rule number
+   * @param rule    The rule object
+   */
+  void insertRuleIntoRuleMap(unsigned int ruleNum, Rule& rule);
+
+  /**
    * @brief Retrieve a rule from rule map
    *
    * @param ruleNum   The rule number

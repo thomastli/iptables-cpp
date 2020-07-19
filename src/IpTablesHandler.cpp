@@ -8,6 +8,14 @@
 static const std::string IP_TABLES_RULES_FILE = "/etc/iptables/iptables.rules";
 using namespace iptables;
 
+void IpTablesHandler::initialize() {
+  chainMap = new ChainMap();
+}
+
+void IpTablesHandler::shutdown() {
+  delete chainMap;
+}
+
 void IpTablesHandler::appendRuleToChain(std::string& chainName, Rule& rule) {
   Chain chain = Chain();
 
@@ -37,16 +45,32 @@ void IpTablesHandler::deleteRuleFromChain(std::string& chainName, Rule& rule) {
   }
 }
 
-void IpTablesHandler::insertRuleIntoChain(std::string& chainName, Rule& rule) {
+void IpTablesHandler::insertRuleIntoChain(std::string& chainName, unsigned int ruleNum, Rule& rule) {
   Chain chain = Chain();
-
   if (chainMap->hasChainInMap(chainName)) {
     chain = chainMap->retrieveChainFromMap(chainName);
   }
 
+  chain.insertRuleIntoChain(ruleNum, rule);
   chainMap->addChainToMap(chainName, chain);
 
   std::string command = CommandConstants::INSERT_COMMAND;
+  std::string entry = formatEntryForIpTables(rule);
+  std::string output = command + " " + chainName + " " + entry;
+
+  commitEntryToIpTables(output);
+}
+
+void IpTablesHandler::replaceRuleInChain(std::string& chainName, unsigned int ruleNum, Rule& rule) {
+  Chain chain = Chain();
+  if (chainMap->hasChainInMap(chainName)) {
+    chain = chainMap->retrieveChainFromMap(chainName);
+  }
+
+  chain.insertRuleIntoChain(ruleNum, rule);
+  chainMap->addChainToMap(chainName, chain);
+
+  std::string command = CommandConstants::REPLACE_COMMAND;
   std::string entry = formatEntryForIpTables(rule);
   std::string output = command + " " + chainName + " " + entry;
 

@@ -6,6 +6,10 @@ void RuleMap::addRuleToRuleMap(Rule& rule) {
   ruleMap.push_back(rule);
 }
 
+void RuleMap::insertRuleIntoRuleMap(unsigned int ruleId, Rule& rule) {
+  ruleMap[ruleId] = rule;
+}
+
 Rule RuleMap::retrieveRuleFromRuleMap(unsigned int numId) {
   Rule retrievedRule = ruleMap[numId];
   return retrievedRule;

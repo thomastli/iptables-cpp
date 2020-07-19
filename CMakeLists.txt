@@ -23,6 +23,22 @@ target_include_directories(${PROJECT_NAME}_obj
 set_property(TARGET ${PROJECT_NAME}_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 ###########################################
+# Executable
+###########################################
+add_executable(${PROJECT_NAME} 
+    $<TARGET_OBJECTS:${PROJECT_NAME}_obj>
+    src/main.cpp
+)
+
+target_include_directories(${PROJECT_NAME}_obj
+    PRIVATE
+    ${CMAKE_CURRENT_BINARY_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+###########################################
 # UNIT Test
 ###########################################
 add_executable(run-tests

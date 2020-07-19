@@ -30,6 +30,14 @@ class Chain {
   void addRuleToChain(Rule& rule);
 
   /**
+   * @brief Insert rule into chain
+   *
+   * @param ruleNum The rule number
+   * @param rule    The rule
+   */
+  void insertRuleIntoChain(unsigned int ruleNum, Rule& rule);
+
+  /**
    * @brief Delete rule from the chain
    *
    * @param ruleNum The rule number

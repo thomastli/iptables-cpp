@@ -12,7 +12,7 @@ class CommandConstants {
   static constexpr const char* LIST_COMMAND = "-L";
   static constexpr const char* NEW_CHAIN_COMMAND = "-N";
   static constexpr const char* POLICY_COMMAND = "-P";
-  static constexpr const char* REPLACE_COMMAD = "-R";
+  static constexpr const char* REPLACE_COMMAND = "-R";
 };
 
 class OptionsConstants {

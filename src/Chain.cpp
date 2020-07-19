@@ -2,8 +2,12 @@
 
 using namespace iptables;
 
-void Chain::addRuleToChain(unsigned int ruleNum, Rule& rule) {
-  ruleMap.addRuleToRuleMap(ruleNum, rule);
+void Chain::addRuleToChain(Rule& rule) {
+  ruleMap.addRuleToRuleMap(rule);
+}
+
+void Chain::insertRuleIntoChain(unsigned int ruleNum, Rule& rule) {
+  ruleMap.insertRuleIntoRuleMap(ruleNum, rule);
 }
 
 void Chain::deleteRuleFromChain(unsigned int ruleNum) {

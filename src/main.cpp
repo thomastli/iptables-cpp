@@ -5,14 +5,18 @@ using namespace iptables;
 
 int main() {
   IpTablesHandler ipTablesHandler = IpTablesHandler();
+  ipTablesHandler.initialize();
 
-  appendFirstRule(ipTablesHandler);
-  appendSecondRule(ipTablesHandler);
+  appendAcceptRule(ipTablesHandler);
+  appendDeclineRule(ipTablesHandler);
   insertRule(ipTablesHandler);
   replaceRule(ipTablesHandler);
+  deleteRule(ipTablesHandler);
+
+  ipTablesHandler.shutdown();
 }
 
-void appendFirstRule(IpTablesHandler& ipTablesHandler) {
+void appendAcceptRule(IpTablesHandler& ipTablesHandler) {
   Rule appendRule = Rule();
   Target target = Target::ACCEPT;
   Protocol protocol = Protocol::TCP;
@@ -33,9 +37,9 @@ void appendFirstRule(IpTablesHandler& ipTablesHandler) {
   ipTablesHandler.appendRuleToChain(inputChain, appendRule);
 }
 
-void appendSecondRule(IpTablesHandler& ipTablesHandler) {
+void appendDeclineRule(IpTablesHandler& ipTablesHandler) {
   Rule appendRule = Rule();
-  Target target = Target::ACCEPT;
+  Target target = Target::DECLINE;
   Protocol protocol = Protocol::TCP;
 
   std::string sourceAddr = "127.0.0.1";
@@ -55,7 +59,28 @@ void appendSecondRule(IpTablesHandler& ipTablesHandler) {
   ipTablesHandler.appendRuleToChain(chainName, appendRule);
 }
 
-void insertRule(IpTablesHandler& ipTablesHandler) {}
+void insertRule(IpTablesHandler& ipTablesHandler) {
+  Rule insertRule = Rule();
+  Target target = Target::ACCEPT;
+  Protocol protocol = Protocol::ALL;
+
+  std::string sourceAddr = "8.8.8.8";
+  Address source = Address();
+  source.parseIpAddressFromString(sourceAddr);
+
+  std::string destAddr = "127.0.0.1";
+  Address destination = Address();
+  source.parseIpAddressFromString(destAddr);
+
+  insertRule.setTarget(target);
+  insertRule.setProtocol(protocol);
+  insertRule.setSourceAddress(source);
+  insertRule.setDestinationAddress(destination);
+
+  std::string chainName = "INPUT";
+  unsigned int ruleNum = 1;
+  ipTablesHandler.insertRuleIntoChain(chainName, ruleNum, insertRule);
+}
 
 void replaceRule(IpTablesHandler& ipTablesHandler) {
   Rule replaceRule = Rule();
@@ -76,7 +101,29 @@ void replaceRule(IpTablesHandler& ipTablesHandler) {
   replaceRule.setDestinationAddress(destination);
 
   std::string chainName = "INPUT";
-  ipTablesHandler.replaceRuleInChain(chainName, replaceRule);
+  unsigned int ruleNum = 0;
+  ipTablesHandler.replaceRuleInChain(chainName, ruleNum, replaceRule);
 }
 
-void deleteRule(IpTablesHandler& ipTablesHandler) {}
+void deleteRule(IpTablesHandler& ipTablesHandler) {
+  Rule deleteRule = Rule();
+  Target target = Target::ACCEPT;
+  Protocol protocol = Protocol::ALL;
+
+  std::string sourceAddr = "8.8.8.8";
+  Address source = Address();
+  source.parseIpAddressFromString(sourceAddr);
+
+  std::string destAddr = "127.0.0.1";
+  Address destination = Address();
+  source.parseIpAddressFromString(destAddr);
+
+  deleteRule.setTarget(target);
+  deleteRule.setProtocol(protocol);
+  deleteRule.setSourceAddress(source);
+  deleteRule.setDestinationAddress(destination);
+
+  std::string chainName = "INPUT";
+  unsigned int ruleNum = 0;
+  ipTablesHandler.deleteRuleFromChain(chainName, deleteRule);
+}

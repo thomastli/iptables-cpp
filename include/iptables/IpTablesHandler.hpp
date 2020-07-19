@@ -13,15 +13,25 @@ class IpTablesHandler {
    * @brief Construct a new Ip Tables Handler object
    *
    */
-  IpTablesHandler() {
-    chainMap = new ChainMap();
-  }
+  IpTablesHandler() {}
 
   /**
    * @brief Destroy the Ip Tables Handler object
    *
    */
   ~IpTablesHandler() {}
+
+  /**
+   * @brief Initialize the handler
+   *
+   */
+  void initialize();
+
+  /**
+   * @brief Shutdown the handler
+   *
+   */
+  void shutdown();
 
   /**
    * @brief Append chain to iptables
@@ -43,14 +53,14 @@ class IpTablesHandler {
    *
    * @param chainName
    */
-  void insertRuleIntoChain(std::string& chainName, Rule& rule);
+  void insertRuleIntoChain(std::string& chainName, unsigned int ruleNum, Rule& rule);
 
   /**
    * @brief Replace chain in iptables
    *
    * @param chainName
    */
-  void replaceRuleInChain(std::string& chainName, Rule& rule);
+  void replaceRuleInChain(std::string& chainName, unsigned int ruleNum, Rule& rule);
 
   /**
    * @brief List all chains in iptables
