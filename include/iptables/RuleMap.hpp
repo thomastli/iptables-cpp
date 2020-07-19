@@ -64,7 +64,7 @@ class RuleMap {
   bool hasRuleInMap(unsigned int ruleNum);
 
  private:
-  std::vector<Rule> ruleMap;
+  std::map<unsigned int, Rule> ruleMap;
 };
 }  // namespace iptables
 #endif  // !IP_TABLES_MAP_HPP

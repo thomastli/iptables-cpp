@@ -3,7 +3,8 @@
 using namespace iptables;
 
 void RuleMap::addRuleToRuleMap(Rule& rule) {
-  ruleMap.push_back(rule);
+  unsigned int end = ruleMap.size();
+  ruleMap[end] = rule;
 }
 
 void RuleMap::insertRuleIntoRuleMap(unsigned int ruleId, Rule& rule) {
@@ -11,25 +12,25 @@ void RuleMap::insertRuleIntoRuleMap(unsigned int ruleId, Rule& rule) {
 }
 
 Rule RuleMap::retrieveRuleFromRuleMap(unsigned int numId) {
-  Rule retrievedRule = ruleMap[numId];
-  return retrievedRule;
+  Rule rule = Rule();
+  if (hasRuleInMap(numId)) {
+    rule = ruleMap[numId];
+  }
+  return rule;
 }
 
 void RuleMap::deleteRuleFromRuleMap(unsigned int numId) {
-  std::vector<Rule>::iterator itr = ruleMap.begin();
-  itr += numId;
-  ruleMap.erase(itr);
+  if (hasRuleInMap(numId)) {
+    ruleMap.erase(numId);
+  }
 }
 
 bool RuleMap::hasRuleInMap(unsigned int numId) {
   bool result = false;
-
-  std::vector<Rule>::iterator itr = ruleMap.begin();
-  itr += numId;
+  std::map<unsigned int, Rule>::iterator itr = ruleMap.find(numId);
 
   if (itr != ruleMap.end()) {
     result = true;
   }
-
   return result;
 }

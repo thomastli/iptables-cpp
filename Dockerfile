@@ -1,5 +1,5 @@
 # our local base image
-FROM debian
+FROM ubuntu:20.04
 
 MAINTAINER Thomas Li "thomas.tong.li@gmail.com"
 

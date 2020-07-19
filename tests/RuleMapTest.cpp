@@ -4,33 +4,43 @@
 
 using namespace iptables;
 
-SCENARIO("RuleMap - add rule to ip tables map") {
+SCENARIO("RuleMapTest - add rule to rule map") {
   RuleMap ruleMap = RuleMap();
 
-  unsigned int numId = 0;
+  unsigned int ruleNum = 0;
   Rule rule = Rule();
-  ruleMap.addRuleToRuleMap(numId, rule);
+  ruleMap.addRuleToRuleMap(rule);
 
-  REQUIRE(ruleMap.hasRuleInMap(numId));
+  REQUIRE(ruleMap.hasRuleInMap(ruleNum));
 }
 
-SCENARIO("RuleMap - delete rule to ip tables map") {
+SCENARIO("RuleMapTest - delete rule from rule map") {
   RuleMap ruleMap = RuleMap();
 
-  unsigned int numId = 0;
+  unsigned int ruleNum = 0;
   Rule rule = Rule();
-  ruleMap.addRuleToRuleMap(numId, rule);
+  ruleMap.addRuleToRuleMap(rule);
 
-  ruleMap.deleteRuleFromRuleMap(numId);
-  REQUIRE(!ruleMap.hasRuleInMap(numId));
+  ruleMap.deleteRuleFromRuleMap(ruleNum);
+  REQUIRE(!ruleMap.hasRuleInMap(ruleNum));
 }
 
-SCENARIO("RuleMap - retrieve rule to ip tables map") {
+SCENARIO("RuleMapTest - retrieve rule from rule map") {
   RuleMap ruleMap = RuleMap();
 
-  unsigned int numId = 0;
+  unsigned int ruleNum = 0;
   Rule rule = Rule();
-  ruleMap.addRuleToRuleMap(numId, rule);
+  ruleMap.addRuleToRuleMap(rule);
 
-  REQUIRE_NOTHROW(ruleMap.retrieveRuleFromRuleMap(numId));
+  REQUIRE_NOTHROW(ruleMap.retrieveRuleFromRuleMap(ruleNum));
+}
+
+SCENARIO("RuleMapTest - insert rule into rule map") {
+  RuleMap ruleMap = RuleMap();
+
+  unsigned int ruleNum = 1;
+  Rule rule = Rule();
+  ruleMap.insertRuleIntoRuleMap(ruleNum, rule);
+
+  REQUIRE(ruleMap.hasRuleInMap(ruleNum));
 }

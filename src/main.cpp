@@ -3,19 +3,6 @@
 
 using namespace iptables;
 
-int main() {
-  IpTablesHandler ipTablesHandler = IpTablesHandler();
-  ipTablesHandler.initialize();
-
-  appendAcceptRule(ipTablesHandler);
-  appendDeclineRule(ipTablesHandler);
-  insertRule(ipTablesHandler);
-  replaceRule(ipTablesHandler);
-  deleteRule(ipTablesHandler);
-
-  ipTablesHandler.shutdown();
-}
-
 void appendAcceptRule(IpTablesHandler& ipTablesHandler) {
   Rule appendRule = Rule();
   Target target = Target::ACCEPT;
@@ -126,4 +113,17 @@ void deleteRule(IpTablesHandler& ipTablesHandler) {
   std::string chainName = "INPUT";
   unsigned int ruleNum = 0;
   ipTablesHandler.deleteRuleFromChain(chainName, deleteRule);
+}
+
+int main() {
+  IpTablesHandler ipTablesHandler = IpTablesHandler();
+  ipTablesHandler.initialize();
+
+  appendAcceptRule(ipTablesHandler);
+  appendDeclineRule(ipTablesHandler);
+  insertRule(ipTablesHandler);
+  replaceRule(ipTablesHandler);
+  deleteRule(ipTablesHandler);
+
+  ipTablesHandler.shutdown();
 }
