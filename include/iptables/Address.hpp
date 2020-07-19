@@ -92,12 +92,9 @@ class Address {
    */
   void parseIpAddressFromString(std::string& address);
 
-  /**
-   * @brief Convert an IpAddress object into a std::string
-   *
-   * @return std::string
-   */
   std::string formatIpAddressToString();
+
+  int formatIpAddressAsInteger();
 
  private:
   std::vector<unsigned int> ipAddress;

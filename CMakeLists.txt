@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 project(iptablescpp VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 11)
 
+find_package(libiptc)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 ###########################################

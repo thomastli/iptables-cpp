@@ -21,13 +21,12 @@ void IpTablesWrapper::appendRuleToChain(std::string& chainName, Rule& rule) {
 }
 
 void IpTablesWrapper::deleteRuleFromChain(std::string& chainName, Rule& rule) {
-  ipt_chainlabel chainLabel;
   unsigned char* matchMask;
 
   struct ipt_entry iptEntry;
   generateIptEntry(rule, iptEntry);
 
-  iptc_delete_entry(chainLabel, (struct ipt_entry*)&iptEntry, matchMask, xtcHandle);
+  iptc_delete_entry(chainName.c_str(), (struct ipt_entry*)&iptEntry, matchMask, xtcHandle);
   commitChangesToIpTables();
 }
 
@@ -76,14 +75,14 @@ void IpTablesWrapper::generateOffset(ipt_entry& iptEntry) {
 }
 
 void IpTablesWrapper::generateSource(Address& source, ipt_entry& iptEntry) {
-  iptEntry.ip.src.s_addr;
-  iptEntry.ip.smsk.s_addr;
+  iptEntry.ip.src.s_addr = source.formatIpAddressAsInteger();
+  iptEntry.ip.smsk.s_addr = source.getSubnetMask();
   iptEntry.ip.invflags;
 }
 
 void IpTablesWrapper::generateDestination(Address& destination, ipt_entry& iptEntry) {
-  iptEntry.ip.dst.s_addr;
-  iptEntry.ip.dmsk.s_addr;
+  iptEntry.ip.dst.s_addr = destination.formatIpAddressAsInteger();
+  iptEntry.ip.dmsk.s_addr = destination.getSubnetMask();
   iptEntry.ip.invflags;
 }
 

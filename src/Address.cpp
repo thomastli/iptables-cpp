@@ -79,6 +79,12 @@ std::string Address::formatIpAddressToString() {
   return ipAddressAsString;
 }
 
+int Address::formatIpAddressAsInteger() {
+  int addressAsInteger = 0;
+  addressAsInteger = ((ipAddress[0] << 8 + ipAddress[1] << 8 + ipAddress[2] << 8) + ipAddress[3]);
+  return addressAsInteger;
+}
+
 bool isValidIpAddress(std::string& address) {
   bool result = false;
 
