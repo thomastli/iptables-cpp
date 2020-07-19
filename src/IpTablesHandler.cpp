@@ -69,7 +69,7 @@ void IpTablesHandler::replaceRuleInChain(std::string& chainName, unsigned int ru
 
   std::string command = CommandConstants::REPLACE_COMMAND;
   std::string entry = formatEntryForIpTables(rule);
-  std::string output = command + " " + chainName + " " + entry;
+  std::string output = command + " " + chainName + " " + ruleNum + " " + entry;
 
   commitEntryToIpTables(output);
 }

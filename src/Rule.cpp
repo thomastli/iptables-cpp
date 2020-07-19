@@ -67,7 +67,16 @@ std::string Rule::getInValue() {
 std::string Rule::getOutValue() {
   return this->out;
 }
-E void Rule::setTarget(Target& target) {
+
+Address Rule::getSourceAddress() {
+  return this->source;
+}
+
+Address Rule::getDestinationAddress() {
+  return this->destination;
+}
+
+void Rule::setTarget(Target& target) {
   this->target = target;
 }
 

@@ -26,7 +26,7 @@ void appendAcceptRule(IpTablesHandler& ipTablesHandler) {
 
 void appendDeclineRule(IpTablesHandler& ipTablesHandler) {
   Rule appendRule = Rule();
-  Target target = Target::DECLINE;
+  Target target = Target::REJECT;
   Protocol protocol = Protocol::TCP;
 
   std::string sourceAddr = "127.0.0.1";
