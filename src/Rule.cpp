@@ -2,6 +2,52 @@
 
 using namespace iptables;
 
+bool Rule::hasTarget() {
+  bool result = false;
+  if (target != Target::NONE) {
+    result = true;
+  }
+  return result;
+}
+
+bool Rule::hasProtocol() {
+  bool result = false;
+  if (protocol != Protocol::NONE) {
+    result = true;
+  }
+  return result;
+}
+
+bool Rule::hasOptValue() {
+  bool result = false;
+  result = !opt.empty();
+  return result;
+}
+
+bool Rule::hasInValue() {
+  bool result = false;
+  result = !in.empty();
+  return result;
+}
+
+bool Rule::hasOutValue() {
+  bool result = false;
+  result = !out.empty();
+  return result;
+}
+
+bool Rule::hasSource() {
+  bool result = false;
+  result = source.hasHostName() || source.hasIpAddress();
+  return result;
+}
+
+bool Rule::hasDestination() {
+  bool result = false;
+  result = destination.hasHostName() || destination.hasIpAddress();
+  return result;
+}
+
 Protocol Rule::getProtocol() {
   return this->protocol;
 }
@@ -56,4 +102,40 @@ void Rule::setSourceAddress(Address& source) {
 
 void Rule::setDestinationAddress(Address& destination) {
   this->destination = destination;
+}
+
+std::string Rule::parseProtocolToString() {
+  std::string protocolValue;
+
+  switch (protocol) {
+    case Protocol::TCP:
+      protocolValue = "TCP";
+      break;
+    case Protocol::UDP:
+      protocolValue = "UDP";
+      break;
+    case Protocol::ICMP:
+      protocolValue = "ICMP";
+      break;
+    case Protocol::ALL:
+      protocolValue = "ALL";
+      break;
+  }
+
+  return protocolValue;
+}
+
+std::string Rule::parseTargetToString() {
+  std::string targetValue;
+
+  switch (target) {
+    case Target::ACCEPT:
+      targetValue = "ACCEPT";
+      break;
+    case Target::DECLINE:
+      targetValue = "DECLINE";
+      break;
+  }
+
+  return targetValue;
 }

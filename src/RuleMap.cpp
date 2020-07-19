@@ -2,8 +2,8 @@
 
 using namespace iptables;
 
-void RuleMap::addRuleToRuleMap(unsigned int numId, Rule& rule) {
-  ruleMap[numId] = rule;
+void RuleMap::addRuleToRuleMap(Rule& rule) {
+  ruleMap.push_back(rule);
 }
 
 Rule RuleMap::retrieveRuleFromRuleMap(unsigned int numId) {
@@ -12,13 +12,17 @@ Rule RuleMap::retrieveRuleFromRuleMap(unsigned int numId) {
 }
 
 void RuleMap::deleteRuleFromRuleMap(unsigned int numId) {
-  ruleMap.erase(numId);
+  std::vector<Rule>::iterator itr = ruleMap.begin();
+  itr += numId;
+  ruleMap.erase(itr);
 }
 
 bool RuleMap::hasRuleInMap(unsigned int numId) {
   bool result = false;
 
-  std::map<unsigned int, Rule>::iterator itr = ruleMap.find(numId);
+  std::vector<Rule>::iterator itr = ruleMap.begin();
+  itr += numId;
+
   if (itr != ruleMap.end()) {
     result = true;
   }

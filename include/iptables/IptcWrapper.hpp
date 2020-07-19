@@ -8,32 +8,32 @@
 #include "iptables/RuleMap.hpp"
 
 namespace iptables {
-class IpTablesWrapper {
+class IptcWrapper {
  public:
   /**
    * @brief Construct a new Ip Tables Wrapper object
    *
    */
-  IpTablesWrapper();
+  IptcWrapper();
 
   /**
    * @brief Destroy the Ip Tables Wrapper object
    *
    */
-  ~IpTablesWrapper();
+  ~IptcWrapper();
 
   /**
    * @brief Initialize the ip tables module
    *
    * @param tableName
    */
-  void initializeIpTablesModule();
+  void initializeIptcModule();
 
   /**
    * @brief Cleanup the iptables module
    *
    */
-  void IpTablesWrapper::cleanupIpTablesModule() {}
+  void cleanupIptcModule();
 
   /**
    * @brief Append chain to iptables
@@ -48,33 +48,33 @@ class IpTablesWrapper {
    *
    * @param chainName
    */
-  void deleteRuleFromChain(std::string& chainName, Rule& rule) {}
+  void deleteRuleFromChain(std::string& chainName, Rule& rule);
 
   /**
    * @brief Insert chain in iptables
    *
    * @param chainName
    */
-  void insertRuleIntoChain(std::string& chainName, Rule& rule) {}
+  void insertRuleIntoChain(std::string& chainName, Rule& rule);
 
   /**
    * @brief Replace chain in iptables
    *
    * @param chainName
    */
-  void replaceRuleInChain(std::string& chainName, Rule& rule) {}
+  void replaceRuleInChain(std::string& chainName, Rule& rule);
 
   /**
    * @brief List all chains in iptables
    *
    */
-  void listAllRulesInChain(std::string& chainName) {}
+  void listAllRulesInChain(std::string& chainName);
 
   /**
    * @brief List chain rule in iptables
    *
    */
-  void listRuleInChain(std::string& chainName, Rule& rule) {}
+  void listRuleInChain(std::string& chainName, Rule& rule);
 
  private:
   void generateIptEntry(Rule& rule, ipt_entry& iptEntry);

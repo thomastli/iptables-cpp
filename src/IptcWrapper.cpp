@@ -1,18 +1,18 @@
-#include "iptables/IpTablesWrapper.hpp"
+#include "iptables/IptcWrapper.hpp"
 
 #include <string.h>
 
 using namespace iptables;
 
-void IpTablesWrapper::initializeIpTablesModule() {
+void IptcWrapper::initializeIptcModule() {
   this->xtcHandle = iptc_init(tableName.c_str());
 }
 
-void IpTablesWrapper::cleanupIpTablesModule() {
+void IptcWrapper::cleanupIptcModule() {
   iptc_free(this->xtcHandle);
 }
 
-void IpTablesWrapper::appendRuleToChain(std::string& chainName, Rule& rule) {
+void IptcWrapper::appendRuleToChain(std::string& chainName, Rule& rule) {
   struct ipt_entry iptEntry;
   generateIptEntry(rule, iptEntry);
 
@@ -20,7 +20,7 @@ void IpTablesWrapper::appendRuleToChain(std::string& chainName, Rule& rule) {
   commitChangesToIpTables();
 }
 
-void IpTablesWrapper::deleteRuleFromChain(std::string& chainName, Rule& rule) {
+void IptcWrapper::deleteRuleFromChain(std::string& chainName, Rule& rule) {
   unsigned char* matchMask;
 
   struct ipt_entry iptEntry;
@@ -30,7 +30,7 @@ void IpTablesWrapper::deleteRuleFromChain(std::string& chainName, Rule& rule) {
   commitChangesToIpTables();
 }
 
-void IpTablesWrapper::insertRuleIntoChain(std::string& chainName, Rule& rule) {
+void IptcWrapper::insertRuleIntoChain(std::string& chainName, Rule& rule) {
   unsigned int ruleNum;
   struct ipt_entry iptEntry;
   generateIptEntry(rule, iptEntry);
@@ -39,7 +39,7 @@ void IpTablesWrapper::insertRuleIntoChain(std::string& chainName, Rule& rule) {
   commitChangesToIpTables();
 }
 
-void IpTablesWrapper::replaceRuleInChain(std::string& chainName, Rule& rule) {
+void IptcWrapper::replaceRuleInChain(std::string& chainName, Rule& rule) {
   unsigned int ruleNum;
   struct ipt_entry iptEntry;
   generateIptEntry(rule, iptEntry);
@@ -50,7 +50,7 @@ void IpTablesWrapper::replaceRuleInChain(std::string& chainName, Rule& rule) {
 
 void listAllRulesInChain(std::string& chainName) {}
 
-void IpTablesWrapper::listRuleInChain(std::string& chainName, Rule& rule) {
+void IptcWrapper::listRuleInChain(std::string& chainName, Rule& rule) {
   unsigned char* matchMask;
   struct ipt_entry iptEntry;
   generateIptEntry(rule, iptEntry);
@@ -59,7 +59,7 @@ void IpTablesWrapper::listRuleInChain(std::string& chainName, Rule& rule) {
   commitChangesToIpTables();
 }
 
-void IpTablesWrapper::generateIptEntry(Rule& rule, ipt_entry& iptEntry) {
+void IptcWrapper::generateIptEntry(Rule& rule, ipt_entry& iptEntry) {
   generateOffset(iptEntry);
 
   Address source = rule.getSourceAddress();
@@ -69,24 +69,24 @@ void IpTablesWrapper::generateIptEntry(Rule& rule, ipt_entry& iptEntry) {
   generateDestination(destination, iptEntry);
 }
 
-void IpTablesWrapper::generateOffset(ipt_entry& iptEntry) {
+void IptcWrapper::generateOffset(ipt_entry& iptEntry) {
   iptEntry.target_offset = sizeof(xt_entry_target);
   iptEntry.next_offset = iptEntry.target_offset + sizeof(xt_entry_target);
 }
 
-void IpTablesWrapper::generateSource(Address& source, ipt_entry& iptEntry) {
+void IptcWrapper::generateSource(Address& source, ipt_entry& iptEntry) {
   iptEntry.ip.src.s_addr = source.formatIpAddressAsInteger();
   iptEntry.ip.smsk.s_addr = source.getSubnetMask();
   iptEntry.ip.invflags;
 }
 
-void IpTablesWrapper::generateDestination(Address& destination, ipt_entry& iptEntry) {
+void IptcWrapper::generateDestination(Address& destination, ipt_entry& iptEntry) {
   iptEntry.ip.dst.s_addr = destination.formatIpAddressAsInteger();
   iptEntry.ip.dmsk.s_addr = destination.getSubnetMask();
   iptEntry.ip.invflags;
 }
 
-int IpTablesWrapper::commitChangesToIpTables() {
+int IptcWrapper::commitChangesToIpTables() {
   int errorCode = iptc_commit(xtcHandle);
   return errorCode;
 }

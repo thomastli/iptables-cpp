@@ -2,9 +2,6 @@ cmake_minimum_required(VERSION 3.8)
 project(iptablescpp VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 11)
 
-find_package(libiptc)
-include_directories(${PROJECT_SOURCE_DIR}/include)
-
 ###########################################
 # Library
 ###########################################
@@ -12,7 +9,7 @@ add_library(${PROJECT_NAME}_obj OBJECT
     src/Address.cpp
     src/Chain.cpp
     src/ChainMap.cpp
-    src/IpTablesWrapper.cpp
+    src/IpTablesHandler.cpp
     src/Rule.cpp
     src/RuleMap.cpp
 )
@@ -33,7 +30,7 @@ add_executable(run-tests
     tests/AddressTest.cpp
     tests/ChainMapTest.cpp
     tests/ChainTest.cpp
-    tests/IpTablesWrapperTest.cpp
+    tests/IpTablesHandlerTest.cpp
     tests/MainTest.cpp
     tests/RuleMapTest.cpp
     tests/RuleTest.cpp

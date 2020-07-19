@@ -25,10 +25,9 @@ class Chain {
   /**
    * @brief Add a rule to the chain
    *
-   * @param ruleNum The rule number
    * @param rule    The rule object
    */
-  void addRuleToChain(unsigned int ruleNum, Rule& rule);
+  void addRuleToChain(Rule& rule);
 
   /**
    * @brief Delete rule from the chain

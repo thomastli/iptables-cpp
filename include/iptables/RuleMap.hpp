@@ -29,7 +29,7 @@ class RuleMap {
    *
    * @param rule  The rule object
    */
-  void addRuleToRuleMap(unsigned int ruleNum, Rule& rule);
+  void addRuleToRuleMap(Rule& rule);
 
   /**
    * @brief Retrieve a rule from rule map
@@ -53,10 +53,10 @@ class RuleMap {
    * @return true   If present in the map
    * @return false  Otherwise
    */
-  bool hasRuleInMap(unsigned int);
+  bool hasRuleInMap(unsigned int ruleNum);
 
  private:
-  std::map<unsigned int, Rule> ruleMap;
+  std::vector<Rule> ruleMap;
 };
 }  // namespace iptables
 #endif  // !IP_TABLES_MAP_HPP

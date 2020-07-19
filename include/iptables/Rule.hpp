@@ -5,8 +5,8 @@
 
 #include "iptables/Address.hpp"
 
-enum class Target { ACCEPT, DECLINE };
-enum class Protocol { TCP, UDP, ALL };
+enum class Target { NONE, ACCEPT, DECLINE };
+enum class Protocol { NONE, TCP, UDP, ICMP, ALL };
 
 namespace iptables {
 /**
@@ -26,6 +26,62 @@ class Rule {
    *
    */
   ~Rule() {}
+
+  /**
+   * @brief Check if rule has target
+   *
+   * @return true   If target found
+   * @return false  Otherwise
+   */
+  bool hasTarget();
+
+  /**
+   * @brief Check if rule has protocol
+   *
+   * @return true   If protocol found
+   * @return false  Otherwise
+   */
+  bool hasProtocol();
+
+  /**
+   * @brief Check if rule has opt value
+   *
+   * @return true   If opt value found
+   * @return false  Otherwise
+   */
+  bool hasOptValue();
+
+  /**
+   * @brief Check if rule has input value
+   *
+   * @return true   If input value found
+   * @return false  Otherwise
+   */
+  bool hasInValue();
+
+  /**
+   * @brief Check if rule has output value
+   *
+   * @return true   If output value found
+   * @return false  Otherwise
+   */
+  bool hasOutValue();
+
+  /**
+   * @brief Check if rule has source
+   *
+   * @return true   If source found
+   * @return false  Otherwise
+   */
+  bool hasSource();
+
+  /**
+   * @brief Check if rule has destination
+   *
+   * @return true   If destination found
+   * @return false  Otherwise
+   */
+  bool hasDestination();
 
   /**
    * @brief Get the target from the Rule object
@@ -124,6 +180,20 @@ class Rule {
    * @param destination
    */
   void setDestinationAddress(Address& destination);
+
+  /**
+   * @brief Parse target to std::string object
+   *
+   * @return std::string  The target value
+   */
+  std::string parseTargetToString();
+
+  /**
+   * @brief Parse protocol to std::string object
+   *
+   * @return std::string  The protocol value
+   */
+  std::string parseProtocolToString();
 
  private:
   Target target;
