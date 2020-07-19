@@ -88,7 +88,7 @@ void replaceRule(IpTablesHandler& ipTablesHandler) {
   replaceRule.setDestinationAddress(destination);
 
   std::string chainName = "INPUT";
-  unsigned int ruleNum = 0;
+  unsigned int ruleNum = 1;
   ipTablesHandler.replaceRuleInChain(chainName, ruleNum, replaceRule);
 }
 
@@ -111,7 +111,7 @@ void deleteRule(IpTablesHandler& ipTablesHandler) {
   deleteRule.setDestinationAddress(destination);
 
   std::string chainName = "INPUT";
-  unsigned int ruleNum = 0;
+  unsigned int ruleNum = 1;
   ipTablesHandler.deleteRuleFromChain(chainName, deleteRule);
 }
 
