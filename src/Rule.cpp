@@ -67,16 +67,7 @@ std::string Rule::getInValue() {
 std::string Rule::getOutValue() {
   return this->out;
 }
-
-Address Rule::getSourceAddress() {
-  return this->source;
-}
-
-Address Rule::getDestinationAddress() {
-  return this->destination;
-}
-
-void Rule::setTarget(Target& target) {
+E void Rule::setTarget(Target& target) {
   this->target = target;
 }
 
@@ -132,8 +123,8 @@ std::string Rule::parseTargetToString() {
     case Target::ACCEPT:
       targetValue = "ACCEPT";
       break;
-    case Target::DECLINE:
-      targetValue = "DECLINE";
+    case Target::REJECT:
+      targetValue = "REJECT";
       break;
   }
 

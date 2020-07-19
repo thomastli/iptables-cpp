@@ -28,12 +28,6 @@ class IpTablesHandler {
   void initialize();
 
   /**
-   * @brief Shutdown the handler
-   *
-   */
-  void shutdown();
-
-  /**
    * @brief Append chain to iptables
    *
    * @param chainName
@@ -74,7 +68,25 @@ class IpTablesHandler {
    */
   void listRuleInChain(std::string& chainName, Rule& rule);
 
+  /**
+   * @brief Shutdown the handler
+   *
+   */
+  void shutdown();
+
  private:
+  /**
+   * @brief Write the iptables header to the rules file
+   *
+   */
+  void writeHeaderToRulesFile();
+
+  /**
+   * @brief Write iptables footer to the rules file
+   *
+   */
+  void writeFooterToRulesFile();
+
   /**
    * @brief Format entry for ip tables
    *
@@ -84,11 +96,17 @@ class IpTablesHandler {
   std::string formatEntryForIpTables(Rule& rule);
 
   /**
-   * @brief Commit entyr to ip tables
+   * @brief Commit entry to ip tables
    *
    * @param entry   The entry, formatted a string
    */
   void commitEntryToIpTables(std::string& entry);
+
+  /**
+   * @brief Restore rules from file
+   *
+   */
+  void restoreRulesFromFile();
 
   ChainMap* chainMap;
 };

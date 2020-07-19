@@ -5,15 +5,12 @@
 
 #include "iptables/Constants.hpp"
 
-static const std::string IP_TABLES_RULES_FILE = "/etc/iptables/iptables.rules";
+static const std::string IP_TABLES_RULES_FILE = "iptables.rules";
 using namespace iptables;
 
 void IpTablesHandler::initialize() {
   chainMap = new ChainMap();
-}
-
-void IpTablesHandler::shutdown() {
-  delete chainMap;
+  writeHeaderToRulesFile();
 }
 
 void IpTablesHandler::appendRuleToChain(std::string& chainName, Rule& rule) {
@@ -87,16 +84,41 @@ void IpTablesHandler::listRuleInChain(std::string& chainName, Rule& rule) {
   std::string output = command + " " + chainName + " " + entry;
 }
 
+void IpTablesHandler::shutdown() {
+  writeFooterToRulesFile();
+  restoreRulesFromFile();
+  delete chainMap;
+}
+
+void IpTablesHandler::writeHeaderToRulesFile() {
+  std::ofstream rulesFile;
+  rulesFile.open(IP_TABLES_RULES_FILE, std::ios_base::out);
+
+  rulesFile << FileConstants::FILTER << std::endl;
+  rulesFile << FileConstants::INPUT_DROP << std::endl;
+  rulesFile << FileConstants::FORWARD_DROP << std::endl;
+  rulesFile << FileConstants::OUTPUT_DROP << std::endl;
+
+  rulesFile.close();
+}
+
+void IpTablesHandler::writeFooterToRulesFile() {
+  std::ofstream rulesFile;
+  rulesFile.open(IP_TABLES_RULES_FILE, std::ios_base::app);
+  rulesFile << CommandConstants::COMMIT_COMMAND << std::endl;
+  rulesFile.close();
+}
+
 std::string IpTablesHandler::formatEntryForIpTables(Rule& rule) {
   std::string entry;
 
-  if (rule.hasTarget()) {
-    std::string targetOption = OptionsConstants::JUMP_OPTION;
-    entry += targetOption + " " + rule.parseTargetToString() + " ";
-  }
   if (rule.hasProtocol()) {
     std::string protocolOption = OptionsConstants::PROTOCOL_OPTION;
     entry += protocolOption + " " + rule.parseProtocolToString() + " ";
+  }
+  if (rule.hasTarget()) {
+    std::string targetOption = OptionsConstants::JUMP_OPTION;
+    entry += targetOption + " " + rule.parseTargetToString() + " ";
   }
   if (rule.hasInValue()) {
     std::string inputOption = OptionsConstants::INPUT_OPTION;
@@ -114,7 +136,7 @@ std::string IpTablesHandler::formatEntryForIpTables(Rule& rule) {
   if (rule.hasDestination()) {
     std::string destinationOption = OptionsConstants::DESTINATION_OPTION;
     Address address = rule.getDestinationAddress();
-    entry += destinationOption + " " + address.formatIpAddressToString();
+    entry += destinationOption + " " + address.formatIpAddressToString() + " ";
   }
 
   return entry;
@@ -122,7 +144,13 @@ std::string IpTablesHandler::formatEntryForIpTables(Rule& rule) {
 
 void IpTablesHandler::commitEntryToIpTables(std::string& entry) {
   std::ofstream rulesFile;
-  rulesFile.open(IP_TABLES_RULES_FILE);
+  rulesFile.open(IP_TABLES_RULES_FILE, std::ios_base::app);
   rulesFile << entry << std::endl;
   rulesFile.close();
+}
+
+void IpTablesHandler::restoreRulesFromFile() {
+  std::string ipTablesRestore = CommandConstants::IP_TABLES_RESTORE;
+  std::string command = ipTablesRestore + " " + IP_TABLES_RULES_FILE;
+  system(command.c_str());
 }

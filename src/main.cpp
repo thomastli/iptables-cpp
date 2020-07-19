@@ -13,7 +13,7 @@ void appendAcceptRule(IpTablesHandler& ipTablesHandler) {
   source.parseIpAddressFromString(sourceAddr);
   std::string destAddr = "127.0.0.1";
   Address destination = Address();
-  source.parseIpAddressFromString(destAddr);
+  destination.parseIpAddressFromString(destAddr);
 
   appendRule.setTarget(target);
   appendRule.setProtocol(protocol);
@@ -35,7 +35,7 @@ void appendDeclineRule(IpTablesHandler& ipTablesHandler) {
 
   std::string destAddr = "8.8.8.8";
   Address destination = Address();
-  source.parseIpAddressFromString(destAddr);
+  destination.parseIpAddressFromString(destAddr);
 
   appendRule.setTarget(target);
   appendRule.setProtocol(protocol);
@@ -57,7 +57,7 @@ void insertRule(IpTablesHandler& ipTablesHandler) {
 
   std::string destAddr = "127.0.0.1";
   Address destination = Address();
-  source.parseIpAddressFromString(destAddr);
+  destination.parseIpAddressFromString(destAddr);
 
   insertRule.setTarget(target);
   insertRule.setProtocol(protocol);
@@ -80,7 +80,7 @@ void replaceRule(IpTablesHandler& ipTablesHandler) {
 
   std::string destAddr = "127.0.0.1";
   Address destination = Address();
-  source.parseIpAddressFromString(destAddr);
+  destination.parseIpAddressFromString(destAddr);
 
   replaceRule.setTarget(target);
   replaceRule.setProtocol(protocol);
@@ -103,7 +103,7 @@ void deleteRule(IpTablesHandler& ipTablesHandler) {
 
   std::string destAddr = "127.0.0.1";
   Address destination = Address();
-  source.parseIpAddressFromString(destAddr);
+  destination.parseIpAddressFromString(destAddr);
 
   deleteRule.setTarget(target);
   deleteRule.setProtocol(protocol);

@@ -5,7 +5,7 @@
 
 #include "iptables/Address.hpp"
 
-enum class Target { NONE, ACCEPT, DECLINE };
+enum class Target { NONE, ACCEPT, REJECT };
 enum class Protocol { NONE, TCP, UDP, ICMP, ALL };
 
 namespace iptables {
