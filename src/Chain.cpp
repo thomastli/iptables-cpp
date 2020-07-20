@@ -22,3 +22,7 @@ Rule Chain::retrieveRuleFromChain(unsigned int ruleNum) {
 bool Chain::hasRuleInChain(unsigned int ruleNum) {
   return ruleMap.hasRuleInMap(ruleNum);
 }
+
+unsigned int Chain::getSizeOfRuleMap() {
+  return ruleMap.size();
+}

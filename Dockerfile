@@ -9,4 +9,4 @@ ENV TZ=America/UTC
 LABEL description="Container for use with Visual Studio" 
 
 # install build dependencies 
-RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y g++ make cmake git iptables libiptc0 libiptc-dev autotools-dev autoconf
+RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y g++ make cmake git iptables libjsoncpp-dev

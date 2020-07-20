@@ -132,6 +132,9 @@ std::string Rule::parseTargetToString() {
     case Target::ACCEPT:
       targetValue = "ACCEPT";
       break;
+    case Target::DROP:
+      targetValue = "DROP";
+      break;
     case Target::REJECT:
       targetValue = "REJECT";
       break;

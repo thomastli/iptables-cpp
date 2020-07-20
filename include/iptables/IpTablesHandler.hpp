@@ -108,6 +108,12 @@ class IpTablesHandler {
    */
   void restoreRulesFromFile();
 
+  /**
+   * @brief Backup rules to Json file
+   *
+   */
+  void backupRulesToJsonFile();
+
   ChainMap* chainMap;
 };
 }  // namespace iptables

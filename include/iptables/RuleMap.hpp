@@ -63,6 +63,13 @@ class RuleMap {
    */
   bool hasRuleInMap(unsigned int ruleNum);
 
+  /**
+   * @brief Get size of rule map
+   *
+   * @return unsigned int The size
+   */
+  unsigned int size();
+
  private:
   std::map<unsigned int, Rule> ruleMap;
 };

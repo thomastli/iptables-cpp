@@ -1,5 +1,7 @@
 #include "iptables/IpTablesHandler.hpp"
 
+#include <json/json.h>
+
 #include <fstream>
 #include <iostream>
 
@@ -154,3 +156,5 @@ void IpTablesHandler::restoreRulesFromFile() {
   std::string command = ipTablesRestore + " " + IP_TABLES_RULES_FILE;
   system(command.c_str());
 }
+
+void IpTablesHandler::backupRulesToJsonFile() {}

@@ -17,6 +17,18 @@ class CommandConstants {
   static constexpr const char* REPLACE_COMMAND = "-R";
 };
 
+class DatabaseConstants {
+ public:
+  static constexpr const char* CHAIN_NAME_KEY = "chainName";
+  static constexpr const char* RULE_NUMBER_KEY = "ruleNumber";
+  static constexpr const char* TARGET_KEY = "target";
+  static constexpr const char* PROTOCOL_KEY = "protocol";
+  static constexpr const char* INPUT_KEY = "input";
+  static constexpr const char* OUTPUT_KEY = "output";
+  static constexpr const char* SOURCE_KEY = "source";
+  static constexpr const char* DESTINATION_KEY = "destination";
+};
+
 class FileConstants {
  public:
   static constexpr const char* FILTER = "*filter";

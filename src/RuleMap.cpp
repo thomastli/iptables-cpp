@@ -34,3 +34,7 @@ bool RuleMap::hasRuleInMap(unsigned int numId) {
   }
   return result;
 }
+
+unsigned int RuleMap::size() {
+  return ruleMap.size();
+}

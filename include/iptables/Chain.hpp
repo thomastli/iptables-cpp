@@ -61,6 +61,13 @@ class Chain {
    */
   bool hasRuleInChain(unsigned int ruleNum);
 
+  /**
+   * @brief Get the Size Of Rule Map object
+   *
+   * @return unsigned int The size
+   */
+  unsigned int getSizeOfRuleMap();
+
  private:
   RuleMap ruleMap;
 };
