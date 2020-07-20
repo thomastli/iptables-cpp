@@ -23,10 +23,10 @@ sudo ./build.sh
 
 ### Usage instructions
 
-Running the demo:
+Running the demo: \
 sudo ./iptablescpp
 
-Running the unit tests
+Running the unit tests: \
 sudo ./run-tests
 
 ## Development Notes
