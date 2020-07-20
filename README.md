@@ -21,6 +21,14 @@ git clone https://github.com/thomastli/iptables-cpp.git \
 cd iptables-cpp \
 sudo ./build.sh
 
+### Usage instructions
+
+Running the demo:
+sudo ./iptablescpp
+
+Running the unit tests
+sudo ./run-tests
+
 ## Development Notes
 
 ### Preferred IDE
