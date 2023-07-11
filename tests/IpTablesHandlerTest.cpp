@@ -3,11 +3,17 @@
 
 using namespace iptables;
 
-SCENARIO("IpTablesHandler - append rule to chain") {
+TEST_CASE("IpTablesHandler - append rule to chain") {
   IpTablesHandler ipTablesHandler = IpTablesHandler();
   ipTablesHandler.initialize();
 
-  Rule appendRule = Rule();
+  Rule rule = Rule();
+  std::string chain = "INPUT";
+
+  SECTION("Append empty rule") {
+    ipTablesHandler.appendRuleToChain(chain, rule);
+  }
+
   Target target = Target::ACCEPT;
   Protocol protocol = Protocol::TCP;
 
@@ -17,23 +23,49 @@ SCENARIO("IpTablesHandler - append rule to chain") {
   std::string destAddr = "127.0.0.1";
   Address destination = Address();
   destination.parseIpAddressFromString(destAddr);
+  std::string in_value = "eth0";
+  std::string out_value = "lo";
 
-  appendRule.setTarget(target);
-  appendRule.setProtocol(protocol);
-  appendRule.setSourceAddress(source);
-  appendRule.setDestinationAddress(destination);
+  rule.setTarget(target);
+  rule.setProtocol(protocol);
+  rule.setSourceAddress(source);
+  rule.setDestinationAddress(destination);
+  rule.setInValue(in_value);
+  rule.setOutValue(out_value);
 
-  std::string inputChain = "INPUT";
-  REQUIRE_NOTHROW(ipTablesHandler.appendRuleToChain(inputChain, appendRule));
+  SECTION("Appending a rule to a new chain") {
+    REQUIRE_NOTHROW(ipTablesHandler.appendRuleToChain(chain, rule));
+  }
+
+  SECTION("When the chain already exists") {
+    Rule newRule = Rule();
+    target = Target::DROP;
+    protocol = Protocol::UDP;
+
+    sourceAddr = "8.8.8.8";
+    source = Address();
+    source.parseIpAddressFromString(sourceAddr);
+    destAddr = "127.0.0.1";
+    destination = Address();
+    destination.parseIpAddressFromString(destAddr);
+
+    newRule.setTarget(target);
+    newRule.setProtocol(protocol);
+    newRule.setSourceAddress(source);
+    newRule.setDestinationAddress(destination);
+
+    ipTablesHandler.appendRuleToChain(chain, rule);
+    REQUIRE_NOTHROW(ipTablesHandler.appendRuleToChain(chain, newRule));
+  }
 
   ipTablesHandler.shutdown();
 }
 
-SCENARIO("IpTablesHandler - insert rule into chain") {
+TEST_CASE("IpTablesHandler - delete rule from chain") {
   IpTablesHandler ipTablesHandler = IpTablesHandler();
   ipTablesHandler.initialize();
 
-  Rule insertRule = Rule();
+  Rule rule = Rule();
   Target target = Target::ACCEPT;
   Protocol protocol = Protocol::ALL;
 
@@ -45,67 +77,108 @@ SCENARIO("IpTablesHandler - insert rule into chain") {
   Address destination = Address();
   destination.parseIpAddressFromString(destAddr);
 
-  insertRule.setTarget(target);
-  insertRule.setProtocol(protocol);
-  insertRule.setSourceAddress(source);
-  insertRule.setDestinationAddress(destination);
+  rule.setTarget(target);
+  rule.setProtocol(protocol);
+  rule.setSourceAddress(source);
+  rule.setDestinationAddress(destination);
 
-  std::string chainName = "INPUT";
-  unsigned int ruleNum = 1;
-  REQUIRE_NOTHROW(ipTablesHandler.insertRuleIntoChain(chainName, ruleNum, insertRule));
+  std::string chain = "INPUT";
+
+  SECTION("Deleting a rule from a chain that does not exist") {
+    REQUIRE_NOTHROW(ipTablesHandler.deleteRuleFromChain(chain, rule));
+  }
+
+  SECTION("Deleting a rule from a chain that does exist") {
+    ipTablesHandler.appendRuleToChain(chain, rule);
+    REQUIRE_NOTHROW(ipTablesHandler.deleteRuleFromChain(chain, rule));
+  }
 
   ipTablesHandler.shutdown();
 }
 
-SCENARIO("IpTablesHandler - delete rule from chain") {
+TEST_CASE("IpTablesHandler - insert rule into chain") {
   IpTablesHandler ipTablesHandler = IpTablesHandler();
   ipTablesHandler.initialize();
 
-  GIVEN("I append a rule to the chain") {
-    Rule appendRule = Rule();
-    Target target = Target::ACCEPT;
-    Protocol protocol = Protocol::ALL;
+  Rule rule = Rule();
+  Target target = Target::ACCEPT;
+  Protocol protocol = Protocol::ALL;
 
-    std::string sourceAddr = "8.8.8.8";
-    Address source = Address();
-    source.parseIpAddressFromString(sourceAddr);
-    std::string destAddr = "127.0.0.1";
-    Address destination = Address();
-    destination.parseIpAddressFromString(destAddr);
+  std::string sourceAddr = "8.8.8.8";
+  Address source = Address();
+  source.parseIpAddressFromString(sourceAddr);
 
-    appendRule.setTarget(target);
-    appendRule.setProtocol(protocol);
-    appendRule.setSourceAddress(source);
-    appendRule.setDestinationAddress(destination);
+  std::string destAddr = "127.0.0.1";
+  Address destination = Address();
+  destination.parseIpAddressFromString(destAddr);
 
-    std::string inputChain = "INPUT";
-    ipTablesHandler.appendRuleToChain(inputChain, appendRule);
+  rule.setTarget(target);
+  rule.setProtocol(protocol);
+  rule.setSourceAddress(source);
+  rule.setDestinationAddress(destination);
+
+  std::string chainName = "INPUT";
+  unsigned int ruleNum = 1;
+
+  SECTION("Inserting a rule into a new chain") {
+    REQUIRE_NOTHROW(ipTablesHandler.insertRuleIntoChain(chainName, ruleNum, rule));
   }
 
-  WHEN("I delete the same rule in the chain") {
-    Rule deleteRule = Rule();
-    Target target = Target::ACCEPT;
-    Protocol protocol = Protocol::ALL;
+  SECTION("Insert a rule into an existing chain") {
+    REQUIRE_NOTHROW(ipTablesHandler.appendRuleToChain(chainName, rule));
+    REQUIRE_NOTHROW(ipTablesHandler.insertRuleIntoChain(chainName, ruleNum, rule));
+  }
+
+  ipTablesHandler.shutdown();
+}
+
+TEST_CASE("IpTablesHandler - replace rule in chain") {
+  IpTablesHandler ipTablesHandler = IpTablesHandler();
+  ipTablesHandler.initialize();
+
+  Rule rule = Rule();
+  Target target = Target::ACCEPT;
+  Protocol protocol = Protocol::ALL;
+
+  std::string sourceAddr = "8.8.8.8";
+  Address source = Address();
+  source.parseIpAddressFromString(sourceAddr);
+
+  std::string destAddr = "127.0.0.1";
+  Address destination = Address();
+  destination.parseIpAddressFromString(destAddr);
+
+  rule.setTarget(target);
+  rule.setProtocol(protocol);
+  rule.setSourceAddress(source);
+  rule.setDestinationAddress(destination);
+
+  std::string chainName = "INPUT";
+  unsigned int ruleNum = 1;
+
+  SECTION("Replace rule in new chain") {
+    REQUIRE_NOTHROW(ipTablesHandler.replaceRuleInChain(chainName, ruleNum, rule));
+  }
+
+  SECTION("Replace rule in an existing chain") {
+    Rule newRule = Rule();
+    Target target = Target::DROP;
+    Protocol protocol = Protocol::UDP;
 
     std::string sourceAddr = "8.8.8.8";
     Address source = Address();
     source.parseIpAddressFromString(sourceAddr);
-
     std::string destAddr = "127.0.0.1";
     Address destination = Address();
     destination.parseIpAddressFromString(destAddr);
 
-    deleteRule.setTarget(target);
-    deleteRule.setProtocol(protocol);
-    deleteRule.setSourceAddress(source);
-    deleteRule.setDestinationAddress(destination);
+    newRule.setTarget(target);
+    newRule.setProtocol(protocol);
+    newRule.setSourceAddress(source);
+    newRule.setDestinationAddress(destination);
 
-    std::string chainName = "INPUT";
-    unsigned int ruleNum = 0;
-
-    THEN("I expect to be able to delete the rule successfully") {
-      ipTablesHandler.deleteRuleFromChain(chainName, deleteRule);
-    }
+    REQUIRE_NOTHROW(ipTablesHandler.appendRuleToChain(chainName, rule));
+    REQUIRE_NOTHROW(ipTablesHandler.replaceRuleInChain(chainName, ruleNum, newRule));
   }
 
   ipTablesHandler.shutdown();

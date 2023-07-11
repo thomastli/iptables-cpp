@@ -3,7 +3,7 @@
 
 using namespace iptables;
 
-SCENARIO("ChainMapTest -  add chain to the map") {
+TEST_CASE("ChainMapTest -  add chain to the map") {
   ChainMap chainMap = ChainMap();
 
   std::string chainName = "INPUT";
@@ -13,7 +13,7 @@ SCENARIO("ChainMapTest -  add chain to the map") {
   REQUIRE(chainMap.hasChainInMap(chainName));
 }
 
-SCENARIO("ChainMapTest - delete chain to the map") {
+TEST_CASE("ChainMapTest - delete chain to the map") {
   ChainMap chainMap = ChainMap();
 
   std::string chainName = "CUSTOM";
@@ -25,7 +25,7 @@ SCENARIO("ChainMapTest - delete chain to the map") {
   REQUIRE(!chainMap.hasChainInMap(chainName));
 }
 
-SCENARIO("ChainMapTest - retrieve chain from the map") {
+TEST_CASE("ChainMapTest - retrieve chain from the map") {
   ChainMap chainMap = ChainMap();
 
   std::string chainName = "INPUT";
@@ -33,4 +33,20 @@ SCENARIO("ChainMapTest - retrieve chain from the map") {
   chainMap.addChainToMap(chainName, chain);
 
   Chain retrievedChain = chainMap.retrieveChainFromMap(chainName);
+}
+
+TEST_CASE("ChainMapTest - has chain in map") {
+  ChainMap chainMap = ChainMap();
+
+  std::string chainName = "INPUT";
+
+  SECTION("If chain does not exist in the map") {
+    REQUIRE_FALSE(chainMap.hasChainInMap(chainName));
+  }
+
+  SECTION("If chain does exist in the map") {
+    Chain chain = Chain();
+    chainMap.addChainToMap(chainName, chain);
+    REQUIRE(chainMap.hasChainInMap(chainName));
+  }
 }

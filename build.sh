@@ -5,7 +5,7 @@ install -d build
 cd build
 
 # Clear build directory of any build artifacts 
-rm -rf *
+rm ./*
 
 # Build iptables-cpp
 cmake ..

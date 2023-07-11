@@ -19,7 +19,10 @@ class Rule {
    * @brief Construct a new Ip Rule object
    *
    */
-  Rule() {}
+  Rule() {
+    this->protocol = Protocol::NONE;
+    this->target = Target::NONE;
+  }
 
   /**
    * @brief Destroy the Ip Rule object

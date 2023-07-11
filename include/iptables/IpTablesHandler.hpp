@@ -57,18 +57,6 @@ class IpTablesHandler {
   void replaceRuleInChain(std::string& chainName, unsigned int ruleNum, Rule& rule);
 
   /**
-   * @brief List all chains in iptables
-   *
-   */
-  void listAllRulesInChain(std::string& chainName);
-
-  /**
-   * @brief List chain rule in iptables
-   *
-   */
-  void listRuleInChain(std::string& chainName, Rule& rule);
-
-  /**
    * @brief Shutdown the handler
    *
    */
@@ -79,13 +67,13 @@ class IpTablesHandler {
    * @brief Write the iptables header to the rules file
    *
    */
-  void writeHeaderToRulesFile();
+  static void writeHeaderToRulesFile();
 
   /**
    * @brief Write iptables footer to the rules file
    *
    */
-  void writeFooterToRulesFile();
+  static void writeFooterToRulesFile();
 
   /**
    * @brief Format entry for ip tables
@@ -93,26 +81,20 @@ class IpTablesHandler {
    * @param rule            The rule object
    * @return std::string    Formatted string
    */
-  std::string formatEntryForIpTables(Rule& rule);
+  static std::string formatEntryForIpTables(Rule& rule);
 
   /**
    * @brief Commit entry to ip tables
    *
    * @param entry   The entry, formatted a string
    */
-  void commitEntryToIpTables(std::string& entry);
+  static void commitEntryToIpTables(std::string& entry);
 
   /**
    * @brief Restore rules from file
    *
    */
-  void restoreRulesFromFile();
-
-  /**
-   * @brief Backup rules to Json file
-   *
-   */
-  void backupRulesToJsonFile();
+  static void restoreRulesFromFile();
 
   ChainMap* chainMap;
 };

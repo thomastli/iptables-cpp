@@ -3,7 +3,7 @@
 
 using namespace iptables;
 
-SCENARIO("ChainTest -  add rule to chain") {
+TEST_CASE("ChainTest -  add rule to chain") {
   Chain chain = Chain();
 
   unsigned int ruleNum = 0;
@@ -13,7 +13,7 @@ SCENARIO("ChainTest -  add rule to chain") {
   REQUIRE(chain.hasRuleInChain(ruleNum));
 }
 
-SCENARIO("ChainTest - retrieve rule from chain") {
+TEST_CASE("ChainTest - retrieve rule from chain") {
   Chain chain = Chain();
 
   unsigned int ruleNum = 0;
@@ -22,7 +22,7 @@ SCENARIO("ChainTest - retrieve rule from chain") {
 
   REQUIRE_NOTHROW(chain.retrieveRuleFromChain(ruleNum));
 }
-SCENARIO("ChainTest - insert rule into chain") {
+TEST_CASE("ChainTest - insert rule into chain") {
   Chain chain = Chain();
 
   unsigned int ruleNum = 1;
@@ -32,7 +32,7 @@ SCENARIO("ChainTest - insert rule into chain") {
   REQUIRE(chain.hasRuleInChain(ruleNum));
 }
 
-SCENARIO("ChainTest - delete rule from chain") {
+TEST_CASE("ChainTest - delete rule from chain") {
   Chain chain = Chain();
 
   unsigned int ruleNum = 0;
@@ -41,4 +41,19 @@ SCENARIO("ChainTest - delete rule from chain") {
 
   chain.deleteRuleFromChain(ruleNum);
   REQUIRE(!chain.hasRuleInChain(ruleNum));
+}
+
+TEST_CASE("ChainTest - get size of rule map") {
+  Chain chain = Chain();
+
+  SECTION("When the rule map is empty") {
+    REQUIRE(chain.getSizeOfRuleMap() == 0);
+  }
+
+  SECTION("When the rule map has contents") {
+    unsigned int ruleNum = 1;
+    Rule rule = Rule();
+    chain.insertRuleIntoChain(ruleNum, rule);
+    REQUIRE(chain.getSizeOfRuleMap() == 1);
+  }
 }

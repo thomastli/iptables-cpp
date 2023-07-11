@@ -1,0 +1,51 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@3.2.5
+jobs:
+  build:
+    docker:
+      - image: cimg/base:current-20.04
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt update
+            sudo apt install -y cmake make gcc g++ iptables libjsoncpp-dev lcov gcovr
+            sudo ln -s /usr/include/jsoncpp/json/ /usr/include/json
+      - run:
+          name: Build release
+          command: |
+            cmake -DCMAKE_BUILD_TYPE=Release .
+            make
+      - store_artifacts:
+          path: iptablescpp
+  test:
+    docker:
+      - image: cimg/base:current-20.04
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt update
+            sudo apt install -y cmake make gcc g++ iptables libjsoncpp-dev lcov gcovr
+            sudo ln -s /usr/include/jsoncpp/json/ /usr/include/json
+      - run:
+          name: Build debug
+          command: |
+            cmake -DCMAKE_BUILD_TYPE=Debug .
+            sudo make
+      - run:
+          name: Generate coverage
+          command: |
+            sudo make coverage
+      - store_artifacts:
+          path: coverage.xml
+      - codecov/upload:
+          file: coverage.xml
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test

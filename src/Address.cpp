@@ -68,7 +68,7 @@ void Address::parseIpAddressFromString(std::string& address) {
 }
 
 std::string Address::formatIpAddressToString() {
-  std::string ipAddressAsString = "";
+  std::string ipAddressAsString;
 
   ipAddressAsString += std::to_string(ipAddress[0]);
 
@@ -83,13 +83,4 @@ int Address::formatIpAddressAsInteger() {
   int addressAsInteger = 0;
   addressAsInteger = ((ipAddress[0] << 8 + ipAddress[1] << 8 + ipAddress[2] << 8) + ipAddress[3]);
   return addressAsInteger;
-}
-
-bool isValidIpAddress(std::string& address) {
-  bool result = false;
-
-  std::regex ipRegex = std::regex(IP_REGEX_PATTERN, std::regex_constants::ECMAScript);
-  result = std::regex_match(address, ipRegex);
-
-  return result;
 }

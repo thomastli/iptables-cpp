@@ -76,16 +76,6 @@ void IpTablesHandler::replaceRuleInChain(std::string& chainName, unsigned int ru
   commitEntryToIpTables(output);
 }
 
-void IpTablesHandler::listAllRulesInChain(std::string& chainName) {
-  std::string command = CommandConstants::LIST_COMMAND;
-}
-
-void IpTablesHandler::listRuleInChain(std::string& chainName, Rule& rule) {
-  std::string command = CommandConstants::LIST_COMMAND;
-  std::string entry = formatEntryForIpTables(rule);
-  std::string output = command + " " + chainName + " " + entry;
-}
-
 void IpTablesHandler::shutdown() {
   writeFooterToRulesFile();
   restoreRulesFromFile();
@@ -156,5 +146,3 @@ void IpTablesHandler::restoreRulesFromFile() {
   std::string command = ipTablesRestore + " " + IP_TABLES_RULES_FILE;
   system(command.c_str());
 }
-
-void IpTablesHandler::backupRulesToJsonFile() {}
