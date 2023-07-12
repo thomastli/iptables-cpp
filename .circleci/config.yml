@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/base:current-20.04
+      - image: cimg/base:current
     steps:
       - checkout
       - run:
@@ -22,7 +22,7 @@ jobs:
           path: iptablescpp
   test:
     docker:
-      - image: cimg/base:current-20.04
+      - image: cimg/base:current
     steps:
       - checkout
       - run:
